@@ -1,5 +1,6 @@
 ml
 constants.py
-results
+results*
 __pycache__/
 req.txt
+*.pdf

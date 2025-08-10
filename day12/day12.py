@@ -1,202 +1,150 @@
-from transformers import pipeline
-from lime.lime_text import LimeTextExplainer
 import time
 import spacy
 import pytextrank
 import numpy as np
-from matplotlib import pyplot as plt
-import os
+import matplotlib.pyplot as plt
 import json
-
-# ===============================
-#   Emotion Classification
-# ===============================
-def classify_emotions(texts, emotion_classifier, class_names):
-    results = []
-    for text in texts:
-        outputs = emotion_classifier(text, return_all_scores=True)[0]
-        scores = [next((item['score'] for item in outputs if item['label'] == c), 0) for c in class_names]
-        results.append(scores)
-    return np.array(results)
+from transformers import pipeline
+import os,sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from constants import journals
 
 
-# ===============================
-#   Simple Helpers
-# ===============================
-def word_count(text):
-    return len(text.split())
-
-def compression_ratio(original, summary):
-    return round(len(original.split()) / len(summary.split()), 2) if len(summary.split()) else None
-
-
-# ===============================
-#   Abstractive Summarization
-# ===============================
-def summarize_journals(journals):
-    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
-    abstractive_summaries = []
-    creative_summaries = []
-    for journal in journals:
-        abs_sum = summarizer(journal, max_length=100, min_length=10, do_sample=False)[0]['summary_text']
-        cre_sum = summarizer(journal, max_length=100, min_length=10, do_sample=True, top_k=50, top_p=0.95)[0]['summary_text']
-        abstractive_summaries.append(abs_sum)
-        creative_summaries.append(cre_sum)
-    return abstractive_summaries, creative_summaries
+# ====== Emotion Classifiers ======
+def get_emotion_classifier(option="default"):
+    """Load the appropriate emotion classification pipeline."""
+    if option == "default":
+        classifier = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
+        class_names = ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise"]
+    elif option == "goemotions":
+        classifier = pipeline("text-classification", model="bhadresh-savani/distilbert-base-uncased-emotion", return_all_scores=True)
+        class_names = ["admiration", "amusement", "anger", "annoyance", "approval", "caring", "confusion", "curiosity", "desire",
+                       "disappointment", "disapproval", "disgust", "embarrassment", "excitement", "fear", "gratitude",
+                       "grief", "joy", "love", "nervousness", "optimism", "pride", "realization", "relief", "remorse",
+                       "sadness", "surprise", "neutral"]
+    elif option == "custom":
+        classifier = pipeline("text-classification", model="j-hartmann/emotion-english-distilroberta-base", return_all_scores=True)
+        class_names = ["anger", "joy", "sadness"]
+    else:
+        raise ValueError("Invalid classifier option")
+    return classifier, class_names
 
 
-# ===============================
-#   Extractive Summarization (TextRank)
-# ===============================
+def classify_emotions(journals, emotion_classifier, class_names):
+    """Run emotion classification on all journals."""
+    all_scores = []
+    for text in journals:
+        results = emotion_classifier(text)[0]
+        scores = [0] * len(class_names)
+        for r in results:
+            if r['label'] in class_names:
+                scores[class_names.index(r['label'])] = r['score']
+        all_scores.append(scores)
+    return all_scores
+
+# ====== Extractive Summary ======
 def important_points(journals):
+    """Extractive summary using PyTextRank."""
     nlp = spacy.load("en_core_web_md")
     nlp.add_pipe("textrank")
-    extractive_summaries = []
-    for journal in journals:
-        doc = nlp(journal)
-        summary = " ".join([sent.text for sent in doc._.textrank.summary(limit_sentences=2)])
-        extractive_summaries.append(summary)
-    return extractive_summaries
+    summaries = []
+    for text in journals:
+        doc = nlp(text)
+        sentences = [sent.text for sent in doc._.textrank.summary(limit_sentences=2)]
+        summaries.append(" ".join(sentences))
+    return summaries
 
+# ====== Abstractive Summary ======
+def summarize_abstractive(journals):
+    """Generate only abstractive summaries."""
+    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+    summaries = []
+    for text in journals:
+        result = summarizer(text, max_length=60, min_length=10, do_sample=False)
+        summaries.append(result[0]['summary_text'])
+    return summaries
 
-# ===============================
-#   LIME Explanation
-# ===============================
-def generate_lime_explanation(text, emotion_classifier, class_names, num_features=5, top_labels=1):
-    explainer = LimeTextExplainer(class_names=class_names)
+# ====== Creative Abstractive Summary ======
+def summarize_creative(journals):
+    """Generate creative summaries with more imaginative phrasing."""
+    summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+    summaries = []
+    for text in journals:
+        prompt = f"Write a vivid, creative summary of the following text:\n{text}\nSummary:"
+        result = summarizer(prompt, max_length=80, min_length=15, do_sample=True, temperature=1.0)
+        summaries.append(result[0]['summary_text'])
+    return summaries
 
-    def predict_proba(texts):
-        results = []
-        for t in texts:
-            outputs = emotion_classifier(t, return_all_scores=True)[0]
-            scores = [next((item['score'] for item in outputs if item['label'] == c), 0) for c in class_names]
-            results.append(scores)
-        return np.array(results)
-
-    exp = explainer.explain_instance(
-        text,
-        predict_proba,
-        num_features=num_features,
-        top_labels=top_labels
-    )
-
-    top_label = exp.available_labels()[0]
-    explanation_list = exp.as_list(label=top_label)
-
-    return {
-        "top_emotion": class_names[top_label],
-        "explanation": [{"word": word, "weight": weight} for word, weight in explanation_list]
-    }
-
-
-# ===============================
-#   Save Results
-# ===============================
-def save_results(results, filename):
-    current_file = os.path.splitext(os.path.basename(filename))[0]
-    results_folder = f"results/{current_file}"
-    os.makedirs(results_folder, exist_ok=True)
-    output_path = os.path.join(results_folder, "results.json")
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=4, ensure_ascii=False)
-    print(f"Results saved to {output_path}")
-
-
-# ===============================
-#   Plot Emotion Graph
-# ===============================
-def plot_graph(emotion_scores, class_names, journal_index=0):
-    labels = class_names
+# ====== Plotting ======
+def plot_graph(emotion_scores, class_names, journal_index):
+    """Plot emotion scores for a given journal."""
     scores = emotion_scores[journal_index]
-    
-    plt.figure(figsize=(10, 5))
-    plt.bar(labels, scores, color='skyblue')
-    plt.xlabel('Emotions')
-    plt.ylabel('Scores')
-    plt.title(f'Emotion Analysis for Journal {journal_index + 1}')
-    plt.xticks(rotation=45)
-    plt.ylim(0, 1)
+    plt.figure(figsize=(8, 4))
+    plt.bar(class_names, scores)
+    plt.xticks(rotation=45, ha='right')
+    plt.ylabel("Score")
+    plt.title(f"Emotion Distribution for Journal {journal_index + 1}")
     plt.tight_layout()
     plt.show()
 
+# ====== Results Printing ======
+def print_results(results):
+    for res in results:
+        print("\nJournal:", res["journal"])
+        print("Summary:", res["summary"])
+        print("Emotions:", res["emotion_scores"])
 
-# ===============================
-#   Model Options
-# ===============================
-def get_emotion_classifier(option="default"):
+# ====== Save Results ======
+def save_results(results, classifier_type, summary_type):
+    """Save results to a JSON file."""
+    filename = f"results_{classifier_type}_summary{summary_type}.json"
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=4, ensure_ascii=False)
+    print(f"✅ Results saved to {filename}")
+
+def run_pipeline(classifier_type, summary_type):
     """
-    option: "default" -> 7-class model
-            "goemotions" -> Google's 28-class GoEmotions
-            "custom" -> another emotion model
+    classifier_type: "default", "goemotions", "custom"
+    summary_type: 1 = extractive, 2 = abstractive, 3 = creative abstractive
     """
-    if option == "default":
-        model_id = "j-hartmann/emotion-english-distilroberta-base"
-        class_names = ["anger", "disgust", "fear", "joy", "neutral", "sadness", "surprise"]
-
-    elif option == "goemotions":
-        model_id = "SamLowe/roberta-base-go_emotions"
-        # From GoEmotions 28-class version
-        class_names = [
-            "admiration", "amusement", "anger", "annoyance", "approval", "caring",
-            "confusion", "curiosity", "desire", "disappointment", "disapproval",
-            "disgust", "embarrassment", "excitement", "fear", "gratitude", "grief",
-            "joy", "love", "nervousness", "optimism", "pride", "realization",
-            "relief", "remorse", "sadness", "surprise", "neutral"
-        ]
-
-    elif option == "custom":
-        model_id = "bhadresh-savani/distilbert-base-uncased-emotion"
-        class_names = ["sadness", "joy", "love", "anger", "fear", "surprise"]
-
-    else:
-        raise ValueError("Unknown classifier option.")
-
-    emotion_classifier = pipeline(
-        "text-classification",
-        model=model_id,
-        top_k=None
-    )
-    return emotion_classifier, class_names
-
-
-# ===============================
-#   Main
-# ===============================
-if __name__ == "__main__":
-    from constants import journals  # Your journal entries list
     start = time.time()
 
-    # Choose model: "default", "goemotions", "custom"
-    emotion_classifier, class_names = get_emotion_classifier(option="goemotions")
-
-    # Emotion classification
+    # Load classifier
+    emotion_classifier, class_names = get_emotion_classifier(option=classifier_type)
     emotion_scores = classify_emotions(journals, emotion_classifier, class_names)
 
-    # Summarization
-    abstractive_summaries, creative_summaries = summarize_journals(journals)
+    # Summaries
+    if summary_type == 1:
+        summaries = important_points(journals)  # Extractive
+    elif summary_type == 2:
+        summaries = summarize_abstractive(journals)  # Abstractive
+    elif summary_type == 3:
+        summaries = summarize_creative(journals)  # Creative
+    else:
+        raise ValueError("Invalid summary type")
 
-    # Extractive summary
-    extractive_summaries = important_points(journals)
-
-    # Build results
+    # Combine results
     results = []
     for i, journal in enumerate(journals):
-        lime_exp = generate_lime_explanation(journal, emotion_classifier, class_names)
         results.append({
             "journal": journal.strip(),
-            "extractive_summary": extractive_summaries[i].strip(),
-            "abstractive_summary": abstractive_summaries[i].strip(),
-            "creative_abstractive_summary": creative_summaries[i].strip(),
-            "emotion_scores": {cls: float(score) for cls, score in zip(class_names, emotion_scores[i])},
-            "lime_explanation": lime_exp
+            "summary": summaries[i].strip(),
+            "emotion_scores": {cls: float(score) for cls, score in zip(class_names, emotion_scores[i])}
         })
 
-    # Save results
-    save_results(results, __file__)
-
     end = time.time()
-    print(f"Total processing time: {round(end - start, 2)} seconds")
+    print(f"[{classifier_type.upper()} | Summary Type {summary_type}] Time Taken: {round(end - start, 2)}s")
 
-    # Plot emotion graphs
-    for i in range(len(journals)):
-        plot_graph(emotion_scores, class_names, i)
+    save_results(results, classifier_type, summary_type)
+
+# ====== Run All Combinations ======
+if __name__ == "__main__":
+    run_pipeline("default", 1)
+    # run_pipeline("default", 2)
+    # run_pipeline("default", 3)
+    # run_pipeline("goemotions", 1)
+    # run_pipeline("goemotions", 2)
+    # run_pipeline("goemotions", 3)
+    # run_pipeline("custom", 1)
+    # run_pipeline("custom", 2)
+    # run_pipeline("custom", 3)
