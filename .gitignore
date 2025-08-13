@@ -4,3 +4,4 @@ results*
 __pycache__/
 req.txt
 *.pdf
+.env
