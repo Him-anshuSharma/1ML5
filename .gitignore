@@ -2,6 +2,6 @@ ml
 constants.py
 results*
 __pycache__/
-req.txt
 *.pdf
 .env
+finetuned_emotion/
