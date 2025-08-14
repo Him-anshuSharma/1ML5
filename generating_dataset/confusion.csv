@@ -1,0 +1,66 @@
+journal,anger,disgust,fear,joy,neutral,sadness,surprise
+"Journal 1: I woke up early today, feeling both hopeful and anxious. The rain tapped gently on the window as I sipped my coffee. Thoughts about unresolved work conflicts mingled with a desire to make progress on personal projects. I wrote in my planner, trying to organize my day and calm my mind.",0.15,0.05,0.10,0.25,0.40,0.20,0.12
+"Journal 2: Went for a morning walk in the park. Children were playing and laughing, which lifted my spirits. Yet, I noticed lingering stress from yesterday's disagreements with friends. The fresh air helped, but my mind kept wandering between joy and worry.",0.08,0.02,0.12,0.30,0.45,0.18,0.10
+"Journal 3: I spent the morning tidying up my room and organizing files. While it was productive, I felt a subtle twinge of sadness thinking about past mistakes. At the same time, the sense of accomplishment brought small sparks of joy.",0.10,0.03,0.08,0.22,0.50,0.25,0.10
+"Journal 4: Had a video call with an old friend. Conversation was warm, but I could feel a mix of nostalgia and slight guilt for not staying in touch regularly. Laughs were punctuated by moments of silence, reflecting our shared memories.",0.12,0.04,0.10,0.35,0.40,0.20,0.15
+"Journal 5: Attempted a new recipe for dinner. Some steps didn’t go as planned, creating frustration. Yet, tasting the final dish brought satisfaction and a small burst of happiness. Cooking felt like both a challenge and a reward.",0.18,0.05,0.08,0.40,0.35,0.18,0.12
+"Journal 6: Afternoon nap interrupted by sudden thunder. Heart raced and anxiety spiked momentarily. Later, reflecting on it brought both relief and amusement at my exaggerated fear.",0.08,0.03,0.30,0.25,0.45,0.15,0.20
+"Journal 7: Watching the sunset, I felt nostalgic about past summers. Memories brought both joy and a gentle melancholy. I tried capturing the colors in a sketch, which helped focus my mind and ease some of the longing.",0.10,0.02,0.12,0.35,0.40,0.20,0.18
+"Journal 8: Stuck in traffic, frustration grew as I moved slowly. I played my favorite music, which lifted my mood slightly. The contrast between irritation and enjoyment created a mixed emotional experience.",0.20,0.05,0.10,0.30,0.35,0.18,0.15
+"Journal 9: Cleaning the house while reflecting on old memories. Each corner brought nostalgia and small bursts of joy. Occasionally, I felt guilt for letting some clutter accumulate, but overall I enjoyed the quiet productivity.",0.12,0.03,0.08,0.32,0.45,0.22,0.12
+"Journal 10: Evening walk under street lamps. Calmness settled over me, but thoughts about upcoming responsibilities lingered. Stars were faintly visible, inspiring a quiet sense of awe and reflection.",0.08,0.02,0.10,0.40,0.45,0.18,0.15
+"Journal 11: Argument with a friend left lingering irritation. I reflected on my part, feeling both guilt and stubbornness. Trying to understand their perspective, I felt a mix of frustration and empathy.",0.35,0.05,0.15,0.20,0.30,0.28,0.18
+Journal 12: Wrote a journal entry about achievements. Pride mingled with anxiety about future goals. Re-reading past notes sparked joy and a little surprise at personal growth.,0.08,0.02,0.10,0.38,0.40,0.20,0.12
+"Journal 13: Attempted meditation, struggled to focus, yet felt glimpses of peace. Mind wandered between worries and serenity, creating a subtle blend of emotions.",0.05,0.01,0.15,0.28,0.50,0.18,0.10
+"Journal 14: Went to a café, overheard snippets of conversations. Curiosity mixed with mild envy, and enjoyment of the environment balanced nervousness about returning home.",0.08,0.02,0.12,0.30,0.45,0.20,0.15
+"Journal 15: Saw an old photograph. Mixed emotions surfaced: nostalgia, joy, and a small pang of regret. Sat quietly to reflect, feeling warmth and melancholy simultaneously.",0.12,0.03,0.15,0.28,0.40,0.30,0.18
+"Journal 16: Cooked dinner and accidentally burned part of it. Initially frustrated, then amused. Shared the meal anyway and laughed at mistakes, feeling content.",0.15,0.05,0.08,0.38,0.35,0.18,0.12
+"Journal 17: Evening jog, enjoyed the breeze. Thoughts wandered between past regrets and hopes for the future. Felt lighthearted yet slightly pensive.",0.05,0.01,0.10,0.40,0.45,0.18,0.12
+"Journal 18: Attended a small gathering, felt both joy and slight anxiety. Interactions were pleasant, but occasional self-doubt lingered.",0.12,0.03,0.25,0.35,0.40,0.20,0.15
+"Journal 19: Afternoon nap disturbed by loud noises. Startled at first, then settled into reflection. Felt small bursts of amusement mixed with lingering unease.",0.18,0.05,0.28,0.20,0.35,0.25,0.18
+"Journal 20: Finished organizing old photos. Felt nostalgia and warmth, recalling happy moments and minor regrets, creating a bittersweet sensation.",0.08,0.02,0.12,0.30,0.45,0.25,0.15
+"Journal 21: Watched a comedy show alone. Laughter brought joy, but occasional thoughts of loneliness tempered the experience.",0.10,0.02,0.08,0.40,0.40,0.20,0.12
+"Journal 22: Evening stroll in the park. Fresh air lifted my spirits, yet I reflected on tasks left incomplete, balancing contentment with mild frustration.",0.08,0.03,0.10,0.35,0.45,0.22,0.12
+Journal 23: Tried a new hobby—painting. Felt excited but also unsure of my skills. Satisfaction mingled with self-doubt in equal measure.,0.12,0.02,0.12,0.38,0.40,0.18,0.15
+Journal 24: Met an old friend. Conversation was bittersweet; laughter blended with memories of past misunderstandings.,0.15,0.04,0.10,0.32,0.38,0.25,0.12
+"Journal 25: Rainy evening, stayed in and reflected. Nostalgia and calm competed with small pangs of regret about unachieved goals.",0.08,0.02,0.08,0.28,0.45,0.30,0.10
+"Journal 26: Afternoon spent reading news. Felt anxiety about world events, tempered by gratitude for personal safety.",0.18,0.05,0.35,0.20,0.30,0.28,0.15
+Journal 27: Observed children playing outside. Joy and slight envy surfaced simultaneously as I reflected on my own childhood.,0.05,0.01,0.12,0.42,0.40,0.18,0.12
+Journal 28: Wrote a poem reflecting on hope and sadness. Emotions blended as I navigated memories and aspirations.,0.10,0.02,0.25,0.30,0.40,0.35,0.12
+Journal 29: Evening coffee with friend. Conversation was light but reflections on past disagreements brought subtle tension.,0.08,0.02,0.15,0.38,0.40,0.22,0.12
+"Journal 30: Took a long bath, thinking about past mistakes. Felt calm yet slightly guilty, emotions interweaving peacefully.",0.12,0.03,0.28,0.25,0.35,0.32,0.10
+"Journal 31: Morning jog interrupted by sudden rain. Surprised at first, then laughter and calm replaced irritation.",0.05,0.01,0.20,0.40,0.40,0.18,0.25
+Journal 32: Cooked a new dish that turned out better than expected. Satisfaction and joy mingled with small lingering concerns about time spent.,0.08,0.02,0.12,0.45,0.35,0.15,0.12
+Journal 33: Evening reflection on personal growth. Happiness interlaced with nostalgia and mild regret.,0.12,0.03,0.25,0.30,0.40,0.35,0.12
+Journal 34: Attended a small concert. Joyful music evoked nostalgia and contemplation of past experiences.,0.05,0.01,0.15,0.50,0.35,0.18,0.20
+"Journal 35: Afternoon tea alone. Calm and peace dominated, punctuated by brief moments of wistfulness.",0.03,0.01,0.08,0.38,0.50,0.12,0.08
+"Journal 36: Walked in the city, noticing beauty and chaos. Emotions fluctuated between awe, mild anxiety, and contentment.",0.10,0.03,0.22,0.35,0.35,0.25,0.18
+"Journal 37: Evening reading. Felt content yet slightly melancholic, reflecting on choices made.",0.08,0.02,0.18,0.32,0.40,0.28,0.12
+Journal 38: Chat with sibling. Playful banter mixed with tension from past disagreements.,0.12,0.03,0.25,0.35,0.35,0.30,0.15
+"Journal 39: Tried painting, felt joy and self-doubt simultaneously. Small bursts of pride kept fear at bay.",0.15,0.05,0.28,0.40,0.35,0.25,0.18
+Journal 40: Listened to music. Emotions shifted between calm and nostalgia.,0.08,0.02,0.20,0.38,0.40,0.28,0.15
+"Journal 41: Early morning run. Enjoyed fresh air and quiet streets, while reflecting on minor worries.",0.05,0.01,0.12,0.45,0.40,0.15,0.12
+"Journal 42: Afternoon journaling. Reflected on events, feeling calm yet slightly anxious.",0.10,0.02,0.22,0.32,0.35,0.30,0.12
+"Journal 43: Evening cooking. Some frustration surfaced, yet satisfaction prevailed.",0.18,0.05,0.18,0.35,0.35,0.22,0.12
+Journal 44: Walk in the park. Joy from observing children balanced with gentle melancholy.,0.08,0.02,0.15,0.42,0.40,0.25,0.12
+"Journal 45: Read letters from old friends. Mixed emotions of warmth, nostalgia, and regret.",0.12,0.03,0.25,0.32,0.35,0.35,0.15
+Journal 46: Watched documentary. Learned new things but felt slight anxiety.,0.10,0.02,0.28,0.30,0.35,0.25,0.12
+Journal 47: Evening chat with partner. Playful teasing mixed with subtle concern.,0.12,0.03,0.22,0.38,0.35,0.28,0.12
+Journal 48: Afternoon nap. Woke slightly disoriented but quickly calmed down.,0.08,0.02,0.20,0.25,0.45,0.20,0.12
+Journal 49: Tried new workout. Felt proud and exhausted simultaneously.,0.05,0.01,0.15,0.45,0.45,0.18,0.08
+Journal 50: Evening reflection on career goals. Mixed confidence and doubt coexisted.,0.12,0.03,0.28,0.32,0.35,0.30,0.12
+Journal 51: Strolled by river. Peaceful yet pensive thoughts filled my mind.,0.05,0.01,0.12,0.38,0.45,0.15,0.08
+Journal 52: Afternoon painting. Struggled with technique but enjoyed the process.,0.08,0.02,0.18,0.40,0.35,0.22,0.10
+"Journal 53: Evening tea. Thought about family, mixed light and heavy emotions.",0.10,0.03,0.20,0.35,0.35,0.28,0.12
+Journal 54: Chat with friend. Life stories brought both joy and contemplation.,0.12,0.03,0.25,0.32,0.35,0.32,0.12
+Journal 55: Morning reading. Calm and gentle thoughts filled the room.,0.03,0.01,0.10,0.42,0.50,0.12,0.08
+"Journal 56: Tried a new dessert. Satisfied with outcome, small happiness emerged.",0.05,0.01,0.12,0.45,0.45,0.15,0.08
+Journal 57: Evening jog. Quiet streets brought calm and reflection.,0.05,0.01,0.15,0.38,0.50,0.18,0.08
+Journal 58: Finished organizing desk. Felt accomplished and relaxed.,0.08,0.02,0.10,0.40,0.45,0.15,0.08
+Journal 59: Afternoon call with sibling. Playful teasing with subtle tension.,0.12,0.03,0.22,0.35,0.35,0.28,0.12
+Journal 60: Evening music. Nostalgia and slight melancholy surfaced.,0.10,0.02,0.25,0.32,0.35,0.32,0.12
+Journal 61: Morning meditation. Calm with fleeting anxious thoughts.,0.05,0.01,0.18,0.38,0.45,0.15,0.08
+Journal 62: Walked along street art murals. Mixed emotions of awe and contemplation.,0.08,0.02,0.22,0.40,0.35,0.25,0.12
+"Journal 63: Evening reflection. Wrote letters to self, felt peace with a tinge of sadness.",0.05,0.01,0.15,0.35,0.45,0.20,0.08
+Journal 64: Tried new recipe. Unexpected challenge but satisfaction emerged.,0.08,0.02,0.18,0.42,0.35,0.22,0.12
+"Journal 65: Night walk under street lights. Felt a mix of calm, nostalgia, and slight curiosity.",0.05,0.01,0.12,0.38,0.45,0.18,0.08

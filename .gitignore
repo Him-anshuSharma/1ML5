@@ -4,4 +4,4 @@ results*
 __pycache__/
 *.pdf
 .env
-finetuned_emotion/
+finetuned_emotion*/
