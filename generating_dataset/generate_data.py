@@ -13,25 +13,28 @@ from google import genai
 from google.genai import types
 
 # ----------------- CONFIG -----------------
-TOTAL_CALLS = 750
+TOTAL_CALLS = 1000
 RESULTS_FILE = "emotion_journals.csv"
 CHECKPOINT_FILE = "progress.json"
 MAX_RETRIES = 2
 API_TIMEOUT = 30  # seconds per API call
 # ------------------------------------------
 
-# Load .env from parent (same pattern as your original)
-load_dotenv(Path("../.env"))
+env_path = Path(__file__).resolve().parent / ".env"
+loaded = load_dotenv(dotenv_path=env_path)
+print("✅ .env loaded:", loaded)
 
-# Load API keys: either JSON array or comma-separated string
+# Load the key(s)
 raw_keys = os.getenv("GEMINI_API_KEYS") or os.getenv("GEMINI_API_KEY") or ""
+print("🔍 raw_keys =", raw_keys)
+print("keys", raw_keys)
 try:
     API_KEYS = json.loads(raw_keys) if raw_keys.strip().startswith("[") else [k.strip() for k in raw_keys.split(",") if k.strip()]
 except Exception:
     API_KEYS = [k.strip() for k in raw_keys.split(",") if k.strip()]
 
 if not API_KEYS:
-    raise RuntimeError("No API keys found in .env (GEMINI_API_KEYS or GEMINI_API_KEY)")
+    raise RuntimeError("No API keys found in .env (GEMINI_API_KEY)")
 
 # Create one genai client per key
 clients = [genai.Client(api_key=k) for k in API_KEYS]
